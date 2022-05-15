@@ -144,13 +144,16 @@ def delete_user():
     if flag != 1:
         temp = '没有找到该用户，请重新输入想要删除的用户信息！'
     else:
-        table.cell(row, 1).value = None
-        table.cell(row, 2).value = None
-        table.cell(row, 3).value = None
-        table.cell(row, 4).value = None
-        table.cell(row, 5).value = None
-        wb.save('users.xlsx')
-        temp = '删除成功！用户姓名为：' + name
+        if(username == table.cell(row, 2).value) and (password == table.cell(row, 3).value):
+            table.cell(row, 1).value = None
+            table.cell(row, 2).value = None
+            table.cell(row, 3).value = None
+            table.cell(row, 4).value = None
+            table.cell(row, 5).value = None
+            wb.save('users.xlsx')
+            temp = '删除成功！用户姓名为：' + name
+        else:
+            temp = 'username或password不正确，请重新输入'
     return render_template_string(
         """
             <h1>{{ temp }}</h1>
