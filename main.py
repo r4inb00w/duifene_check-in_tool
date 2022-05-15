@@ -185,9 +185,7 @@ def check_in_code(code):
     # 获取cookies
     result = []
     url = 'https://www.duifene.com/'
-    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:99.0) Gecko/20100101 Firefox/99.0',
-               'Connection': 'keep-alive'}
-    req = requests.get(url=url, headers=headers)
+    req = requests.get(url=url)
     cookies = {'ASP.NET_SessionId': '',
                'tgw_l7_route': ''}
     regexp = []
@@ -196,29 +194,17 @@ def check_in_code(code):
         regexp += re.findall(pattern, str(i))
     cookies['ASP.NET_SessionId'] = str(regexp[0]).replace('=', '')
     cookies['tgw_l7_route'] = str(regexp[1]).replace('=', '')
-
     # 获取用户信息
     users = todict()
 
     # 登录
     for data in users:
-        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:99.0) Gecko/20100101 Firefox/99.0',
-                   'Accept': '*/*',
-                   'Accept-Language': 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
-                   'Accept-Encoding': 'gzip, deflate',
-                   'Referer': 'https://www.duifene.com/',
-                   'Sec-Fetch-Dest': 'empty',
-                   'Sec-Fetch-Mode': 'cors',
-                   'Sec-Fetch-Site': 'same-origin'}
-
+        headers = {'Referer': 'https://www.duifene.com/'} #必要header，系统会检测Referer
         url = 'https://www.duifene.com/AppCode/LoginInfo.ashx'
-        # proxies={'http':'http://127.0.0.1:8080','https':'https://127.0.0.1:8080'}
         req = requests.post(url=url, headers=headers, data=data, cookies=cookies, allow_redirects=True)
 
         # 发送code
         url = 'https://www.duifene.com/_CheckIn/CheckIn.ashx'
-        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:99.0) Gecko/20100101 Firefox/99.0',
-                   'Connection': 'keep-alive'}
         files = {'action': (None, 'studentcheckin'),
                  'studentid': (None, data['studentid']),
                  'checkincode': (None, code)}
