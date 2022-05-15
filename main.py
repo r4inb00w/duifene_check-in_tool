@@ -53,7 +53,7 @@ def code():
             {% endfor %}
             </br>
             总耗时为：{{times}}s
-            <h3>点击<a href='/index.html>链接</a>返回</h3>
+            <h3>点击<a href='/index.html'>链接</a>返回</h3>
         """, result=result, times=times)
 
 def console_excel():
