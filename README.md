@@ -8,7 +8,7 @@
 git clone https://github.com/rainb0w-q/duifene_check-in_tool.git
 cd duifene_check-in_tool
 pip3 install -r requirements.txt
-python3 main.py
+python3 app.py
 ```
 
 接着访问1012端口即可：
